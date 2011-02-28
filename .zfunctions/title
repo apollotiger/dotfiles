@@ -1,0 +1,23 @@
+# $Id: title 59 2010-05-11 03:45:08Z kevin $
+emulate -L zsh
+# From http://www.semicomplete.com/blog/2006/Jun/29
+# escape '%' chars in $1, make nonprintables visible
+a=${(V)1//\%/\%\%}
+
+# Truncate command, and join lines.
+a=$(print -Pn "%40>...>$a" | tr -d "\n")
+#a=$(print -Pn "%40>...>$a")
+
+case $TERM in
+screen)
+    print -Pn "\e]2;$a $2\a" # plain xterm title
+    print -Pn "\ek$a\e\\"      # screen title (in ^A")
+    #print -Pn "\e_%m$2\e\\"   # screen location
+	print -Pn "\e_$2\e\\"      # screen location
+    ;;
+xterm*|rxvt)
+    print -Pn "\e]2;$a $2\a" # plain xterm title
+    ;;
+esac
+
+#vim:ft=zsh

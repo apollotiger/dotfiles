@@ -1,0 +1,18 @@
+#!/bin/bash
+hash="md5"
+(which $hash 2>&1) >/dev/null || hash="md5sum"
+
+# Generate a deterministic number, unweighted % 6, between 0 and 5 inclusive.
+
+random=$($hash /etc/ssh_host_rsa_key.pub | tail -c '4' | \
+    awk 'BEGIN { FS="" } ; { print $1 + $2 + $3 }')
+case $((random % 6)) in
+    0) color="purple" ;;
+    1) color="red" ;;
+    2) color="yellow" ;;
+    3) color="green" ;;
+    4) color="cyan" ;;
+    5) color="blue" ;;
+esac
+
+echo "$color"
