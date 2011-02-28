@@ -1,0 +1,73 @@
+# $Id: dot.screenrc 67 2010-05-11 04:16:40Z kevin $
+escape "^O^O"
+
+startup_message off
+
+# For apps like vim and less so that on quitting your shell is just the 
+# way you left it
+altscreen on
+
+vbell on
+vbell_msg "   Wuff  ----  Wuff!!  "
+
+# This is towards getting what was previoulsy one's prompt into the 
+hardstatus ignore
+hardstatus string "%t :: %h"
+#-------------------------- End Captions--------------------------
+
+
+# all termcap entries are now duplicated as terminfo entries.
+# only difference should be the slightly modified syntax, and check for
+# terminfo entries, that are already corected in the database.
+# 
+# G0 	we have a SEMI-GRAPHICS-CHARACTER-MODE
+# WS	this sequence resizes our window.
+# cs    this sequence changes the scrollregion
+# hs@	we have no hardware statusline. screen will only believe that
+#       there is a hardware status line if hs,ts,fs,ds are all set.
+# ts    to statusline
+# fs    from statusline
+# ds    delete statusline
+# al    add one line
+# AL    add multiple lines
+# dl    delete one line
+# DL    delete multiple lines
+# ic    insert one char (space)
+
+################
+#
+# xterm tweaks
+#
+
+#xterm understands both im/ic and doesn't have a status line.
+#Note: Do not specify im and ic in the real termcap/info file as
+#some programs (e.g. vi) will not work anymore.
+#termcap  xterm hs@:cs=\E[%i%d;%dr:im=\E[4h:ei=\E[4l
+#terminfo xterm hs@:cs=\E[%i%p1%d;%p2%dr:im=\E[4h:ei=\E[4l
+
+# Make the output buffer large for (fast) xterms.
+termcapinfo xterm* OL=10000
+
+# Allow xterm to display the status in its title
+termcapinfo xterm* 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
+termcapinfo screen* 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
+
+bind 'F' flow
+bind 'f' focus
+bind 'j' next
+bind 'k' prev
+bind 'K' kill
+bind 'o' other
+
+# Try and make titles more interesting
+#shelltitle '$ |sh:'
+
+defscrollback 10000
+
+# Menu showing commands and hosts
+windowlist title "Num Location%=Name Flags"
+windowlist string "%03n %h%=%t %f"
+
+defflow on # will force screen to process ^S/^Q
+
+#We don't use complicated caption lines
